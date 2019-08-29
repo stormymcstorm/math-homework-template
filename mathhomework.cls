@@ -7,6 +7,9 @@
 \RequirePackage{ifthen}
 \RequirePackage{fancyhdr}
 \RequirePackage{extramarks}
+\RequirePackage{amsthm}
+\RequirePackage{amssymb}
+\RequirePackage{amsmath}
 
 % Assignment Info Variables
 \newcommand{\@coursetitle}{{\em No course title specified}}
@@ -64,7 +67,7 @@
 
 % Problem Sections
 \newcommand{\@enterProblemHeader}[1]{
-    \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    % \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
     \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
 }
 
@@ -78,12 +81,20 @@
 \setcounter{@problemCounter}{1}
 \nobreak\extramarks{Problem \arabic{@problemCounter}}{}\nobreak{}
 
-\newenvironment{problem}[1][-1]{
-    \ifnum#1>0
-        \setcounter{@problemCounter}{#1}
-    \fi
-    \section{Problem \arabic{@problemCounter}}
+\newenvironment{problem}[1][]{
+    \section*{Problem \arabic{@problemCounter} (\large{#1})}
     \@enterProblemHeader{@problemCounter}
+
+    \newenvironment{solution}[1][Solution:]{
+        \subsubsection*{##1}
+        \noindent\ignorespaces
+    }{}
+
+    \newcommand{\labeleq}[1]{\label{eq:\thesubsection##1}}
+    \newcommand{\refeq}[1]{\ref{eq:\thesubsection##1}}
 }{
     \@exitProblemHeader{@problemCounter}
+    \setcounter{equation}{0}
+    \par\noindent%
+    \ignorespacesafterend
 }
